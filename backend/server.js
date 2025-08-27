@@ -1,12 +1,31 @@
-import app from "./app.js";
-import cloudinary from "cloudinary";
+const express = require('express');
+const cors = require('cors');
+const app = express();
 
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // CLOUDINARY_CLIENT_NAME
-  api_key: process.env.CLOUDINARY_API_KEY,       // CLOUDINARY_CLIENT_API
-  api_secret: process.env.CLOUDINARY_API_SECRET, // CLOUDINARY_CLIENT_SECRET
-});
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running at port ${process.env.PORT}`);
-});
+// ENV
+require('dotenv').config();
+const PORT = process.env.PORT || 5000;
+
+
+// CORS: only allow your live frontend
+app.use(cors({
+origin: [
+'https://novahiringsolutions.com',
+'https://www.novahiringsolutions.com'
+],
+credentials: true,
+}));
+
+
+app.use(express.json());
+
+
+// Example health
+app.get('/health', (req, res) => res.json({ ok: true }));
+
+
+// ... your routes
+
+
+app.listen(PORT, () => console.log(`API listening on ${PORT}`));
