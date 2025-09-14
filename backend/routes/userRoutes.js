@@ -1,19 +1,40 @@
 import express from "express";
-import { login, register, logout, getUser } from "../controllers/userController.js";
+import {
+  login,
+  register,
+  logout,
+  getUser,
+} from "../controllers/userController.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-// ✅ Register (no auth required)
+/**
+ * @route   POST /api/v1/users/register
+ * @desc    Register a new user
+ * @access  Public
+ */
 router.post("/register", register);
 
-// ✅ Login (no auth required)
+/**
+ * @route   POST /api/v1/users/login
+ * @desc    Login user
+ * @access  Public
+ */
 router.post("/login", login);
 
-// ✅ Logout (auth required)
+/**
+ * @route   GET /api/v1/users/logout
+ * @desc    Logout user (clears cookie/token)
+ * @access  Private
+ */
 router.get("/logout", isAuthenticated, logout);
 
-// ✅ Get user details (auth required)
+/**
+ * @route   GET /api/v1/users/me
+ * @desc    Get logged-in user details
+ * @access  Private
+ */
 router.get("/me", isAuthenticated, getUser);
 
 export default router;
