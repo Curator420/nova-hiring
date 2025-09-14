@@ -30,9 +30,9 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/job", jobRouter);
-app.use("/api/v1/application", applicationRouter);
+app.use("/users", userRouter);
+app.use("/job", jobRouter);
+app.use("/application", applicationRouter);
 dbConnection();
 
 app.use(errorMiddleware);
