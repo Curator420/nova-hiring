@@ -26,7 +26,7 @@ const App = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/user/getuser`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/users/getuser`, {
           withCredentials: true,
         });
         setUser(response.data.user);

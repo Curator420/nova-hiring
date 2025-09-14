@@ -52,9 +52,9 @@ app.get("/", (req, res) => {
   res.send("🚀 Nova Hiring API is running");
 });
 
-app.use("/api/v1/applications", applicationRoutes);
-app.use("/api/v1/jobs", jobRoutes);
-app.use("/api/v1/users", userRoutes);
+app.use("/applications", applicationRoutes);
+app.use("/jobs", jobRoutes);
+app.use("/users", userRoutes);
 
 // Start server
 app.listen(PORT, () => console.log(`🚀 Nova Hiring API running on port ${PORT}`));
