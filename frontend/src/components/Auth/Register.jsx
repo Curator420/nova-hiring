@@ -15,20 +15,17 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-
-  const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
+  const { isAuthorized, setIsAuthorized } = useContext(Context);
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/register",
+        `${import.meta.env.VITE_API_URL}/api/v1/users/register`,  // ✅ updated endpoint
         { name, phone, email, role, password },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, // ensure cookies
         }
       );
       toast.success(data.message);
@@ -39,14 +36,13 @@ const Register = () => {
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message || "Registration failed");
     }
   };
 
-  if(isAuthorized){
-    return <Navigate to={'/'}/>
+  if (isAuthorized) {
+    return <Navigate to={"/"} />;
   }
-
 
   return (
     <>
@@ -56,7 +52,7 @@ const Register = () => {
             <img src="/careerconnect-black.png" alt="logo" />
             <h3>Create a new account</h3>
           </div>
-          <form>
+          <form onSubmit={handleRegister}>
             <div className="inputTag">
               <label>Register As</label>
               <div>
@@ -68,6 +64,7 @@ const Register = () => {
                 <FaRegUser />
               </div>
             </div>
+
             <div className="inputTag">
               <label>Name</label>
               <div>
@@ -80,6 +77,7 @@ const Register = () => {
                 <FaPencilAlt />
               </div>
             </div>
+
             <div className="inputTag">
               <label>Email Address</label>
               <div>
@@ -92,6 +90,7 @@ const Register = () => {
                 <MdOutlineMailOutline />
               </div>
             </div>
+
             <div className="inputTag">
               <label>Phone Number</label>
               <div>
@@ -104,6 +103,7 @@ const Register = () => {
                 <FaPhoneFlip />
               </div>
             </div>
+
             <div className="inputTag">
               <label>Password</label>
               <div>
@@ -116,14 +116,14 @@ const Register = () => {
                 <RiLock2Fill />
               </div>
             </div>
-            <button type="submit" onClick={handleRegister}>
-              Register
-            </button>
+
+            <button type="submit">Register</button>
             <Link to={"/login"}>Login Now</Link>
           </form>
         </div>
+
         <div className="banner">
-          <img src="/register.png" alt="login" />
+          <img src="/register.png" alt="register" />
         </div>
       </section>
     </>

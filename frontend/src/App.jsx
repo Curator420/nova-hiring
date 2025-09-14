@@ -19,15 +19,16 @@ import MyJobs from "./components/Job/MyJobs";
 
 const App = () => {
   const { isAuthorized, setIsAuthorized, setUser } = useContext(Context);
+
+  // 👇 Pull API base URL from .env
+  const API = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/api/v1/user/getuser",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/user/getuser`, {
+          withCredentials: true,
+        });
         setUser(response.data.user);
         setIsAuthorized(true);
       } catch (error) {
@@ -35,7 +36,7 @@ const App = () => {
       }
     };
     fetchUser();
-  }, [isAuthorized]);
+  }, [API]); // depend on API, not hardcoded
 
   return (
     <>
