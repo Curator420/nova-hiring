@@ -11,7 +11,7 @@ import userRoutes from "./routes/userRoutes.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000;
 
 // CORS
 app.use(
@@ -45,16 +45,16 @@ mongoose
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Health check route
-app.get("/health", (req, res) => res.json({ ok: true }));
+app.get("/healthz", (req, res) => res.json({ ok: true }));
 
 // Routes
 app.get("/", (req, res) => {
   res.send("🚀 Nova Hiring API is running");
 });
 
-app.use("/api/applications", applicationRoutes);
-app.use("/api/jobs", jobRoutes);
-app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/applications", applicationRoutes);
+app.use("/api/v1/jobs", jobRoutes);
+app.use("/api/v1/users", userRoutes);
 
 // Start server
-app.listen(PORT, () => console.log(`🚀 API running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Nova Hiring API running on port ${PORT}`));
