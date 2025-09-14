@@ -1,15 +1,9 @@
 import express from "express";
-import {
-  login,
-  register,
-  logout,
-  getUser,
-} from "../controllers/userController.js";
+import { login, register, logout, getUser } from "../controllers/userController.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
-<<<<<<< HEAD
 /**
  * @route   POST /api/v1/users/register
  * @desc    Register a new user
@@ -36,14 +30,6 @@ router.get("/logout", isAuthenticated, logout);
  * @desc    Get logged-in user details
  * @access  Private
  */
-=======
-router.post("/register", register);
-
-router.post("/login", login);
-
-router.get("/logout", isAuthenticated, logout);
-
->>>>>>> 7f7cadbf541e179e0cf6f8cec9480e65966960c6
 router.get("/me", isAuthenticated, getUser);
 
 export default router;
