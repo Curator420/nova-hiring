@@ -14,27 +14,27 @@ const router = express.Router();
  * @desc    Register a new user
  * @access  Public
  */
-router.post("/api/v1/register", register);
+router.post("/register", register);
 
 /**
  * @route   POST /api/v1/users/login
  * @desc    Login user
  * @access  Public
  */
-router.post("/api/v1/login", login);
+router.post("/login", login);
 
 /**
  * @route   GET /api/v1/users/logout
  * @desc    Logout user (clears cookie/token)
  * @access  Private
  */
-router.get("/api/v1/logout", isAuthenticated, logout);
+router.get("/logout", isAuthenticated, logout);
 
 /**
  * @route   GET /api/v1/users/me
  * @desc    Get logged-in user details
  * @access  Private
  */
-router.get("/api/v1/me", isAuthenticated, getUser);
+router.get("/me", isAuthenticated, getUser);
 
 export default router;
