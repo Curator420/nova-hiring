@@ -1,25 +1,39 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
+import applicationRoutes from "./routes/applicationRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// CORS
 app.use(
   cors({
     origin: [
       "https://novahiringsolutions.com",
       "https://www.novahiringsolutions.com",
-      "http://localhost:5173" // keep for local dev
+      "http://localhost:5173"
     ],
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(express.json());
+
+
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // MongoDB connect
 mongoose
@@ -30,15 +44,17 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// Health check
+// Health check route
 app.get("/health", (req, res) => res.json({ ok: true }));
 
-// Example route
+// Routes
 app.get("/", (req, res) => {
-  res.send("Nova Hiring API running...");
+  res.send("🚀 Nova Hiring API is running");
 });
 
+app.use("/api/applications", applicationRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/v1/user", userRoutes);
+
 // Start server
-app.listen(PORT, () => {
-  console.log(`🚀 API listening on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 API running on port ${PORT}`));
