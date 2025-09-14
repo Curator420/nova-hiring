@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/v1/users/register`,  // ✅ updated endpoint
+        `${import.meta.env.VITE_API_URL}/register`,  // ✅ updated endpoint
         { name, phone, email, role, password },
         {
           headers: { "Content-Type": "application/json" },
